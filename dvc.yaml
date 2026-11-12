@@ -1,0 +1,38 @@
+stages:
+  data_ingestion:
+    cmd: python training/data_pipeline.py
+    deps:
+      - training/data_pipeline.py
+    outs:
+      - data/cifar10/
+
+  train:
+    cmd: python training/train.py
+    deps:
+      - data/cifar10/
+      - training/train.py
+      - params.yaml
+    params:
+      - epochs
+      - batch_size
+      - learning_rate
+      - optimizer
+      - val_split
+      - seed
+      - num_ray_workers
+      - ray_shard_size
+    outs:
+      - models/CifarCNN.pt
+    metrics:
+      - metrics/train_metrics.json:
+          cache: false
+
+  evaluate:
+    cmd: python training/evaluate.py
+    deps:
+      - data/cifar10/
+      - training/evaluate.py
+      - models/CifarCNN.pt
+    metrics:
+      - metrics/eval_metrics.json:
+          cache: false

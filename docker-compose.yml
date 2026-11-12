@@ -1,0 +1,77 @@
+services:
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:latest
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow_data:/mlflow
+    command: >
+      mlflow server
+      --host 0.0.0.0
+      --port 5000
+      --backend-store-uri sqlite:////mlflow/mlflow.db
+      --artifacts-destination /mlflow/artifacts
+      --allowed-hosts "mlflow:5000,mlflow,localhost:5000,localhost,127.0.0.1:5000"
+      --cors-allowed-origins "http://localhost:8501,http://localhost:5000"
+    networks:
+      - cifar10-net
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+      - "18000:18000"
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    depends_on:
+      - mlflow
+    networks:
+      - cifar10-net
+
+  frontend:
+    build: ./streamlit
+    ports:
+      - "8501:8501"
+    environment:
+      - BACKEND_URL=http://backend:8000
+      - MLFLOW_URL=http://localhost:5000
+      - GRAFANA_URL=http://localhost:3000
+    depends_on:
+      - backend
+    networks:
+      - cifar10-net
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./monitoring/rules.yml:/etc/prometheus/rules.yml
+    networks:
+      - cifar10-net
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
+    networks:
+      - cifar10-net
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    ports:
+      - "9100:9100"
+    networks:
+      - cifar10-net
+
+networks:
+  cifar10-net:
+    driver: bridge
+
+volumes:
+  mlflow_data:

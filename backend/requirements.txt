@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+torch
+torchvision
+pillow
+mlflow
+pandas
+scikit-learn
+numpy
+matplotlib
+ray
+prometheus-client
+pytest

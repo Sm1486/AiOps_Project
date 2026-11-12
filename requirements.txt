@@ -1,0 +1,8 @@
+ray
+torchvision
+matplotlib
+scikit-learn
+pyyaml
+dvc
+httpx2
+python-multipart

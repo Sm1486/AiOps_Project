@@ -1,0 +1,22 @@
+name: CifarCNN
+python_env: python_env.yaml
+
+entry_points:
+  main:
+    parameters:
+      epochs:         {type: int,   default: 10}
+      batch_size:     {type: int,   default: 128}
+      learning_rate:  {type: float, default: 0.001}
+      optimizer:      {type: str,   default: adam}
+      val_split:      {type: float, default: 0.1}
+      seed:           {type: int,   default: 42}
+      num_ray_workers:{type: int,   default: 4}
+      ray_shard_size: {type: int,   default: 5000}
+    command: >
+      python training/train.py
+
+  data_pipeline:
+    command: python training/data_pipeline.py
+
+  evaluate:
+    command: python training/evaluate.py
