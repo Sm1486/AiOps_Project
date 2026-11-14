@@ -1,0 +1,71 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python training/data_pipeline.py
+    deps:
+    - path: training/data_pipeline.py
+      hash: md5
+      md5: 6fee3c4bbe9c68485a10be0ab4878a7a
+      size: 3970
+    outs:
+    - path: data/cifar10/
+      hash: md5
+      md5: e252d2c8ba36d1ab3e21a873ab62daa3.dir
+      size: 356712185
+      nfiles: 9
+  train:
+    cmd: python training/train.py
+    deps:
+    - path: data/cifar10/
+      hash: md5
+      md5: e252d2c8ba36d1ab3e21a873ab62daa3.dir
+      size: 356712185
+      nfiles: 9
+    - path: params.yaml
+      hash: md5
+      md5: 5fb8a6b7931da4c160d1b2b7375294f8
+      size: 127
+    - path: training/train.py
+      hash: md5
+      md5: f8f46c3da78aea01fb268fd73f28082c
+      size: 9606
+    params:
+      params.yaml:
+        batch_size: 128
+        epochs: 10
+        learning_rate: 0.001
+        num_ray_workers: 4
+        optimizer: adam
+        ray_shard_size: 5000
+        seed: 42
+        val_split: 0.1
+    outs:
+    - path: metrics/train_metrics.json
+      hash: md5
+      md5: c308edb3ff9c7d3c68b2f3babbcb478a
+      size: 236
+    - path: models/CifarCNN.pt
+      hash: md5
+      md5: daa7d4e3f09e95c90872628e1aa0ac30
+      size: 1431701
+  evaluate:
+    cmd: python training/evaluate.py
+    deps:
+    - path: data/cifar10/
+      hash: md5
+      md5: e252d2c8ba36d1ab3e21a873ab62daa3.dir
+      size: 356712185
+      nfiles: 9
+    - path: models/CifarCNN.pt
+      hash: md5
+      md5: daa7d4e3f09e95c90872628e1aa0ac30
+      size: 1431701
+    - path: training/evaluate.py
+      hash: md5
+      md5: 0024d2caf6eec60033e1d8ed1b906e53
+      size: 5523
+    outs:
+    - path: metrics/eval_metrics.json
+      hash: md5
+      md5: 63f158e69c91a0592368af06660d0600
+      size: 395
