@@ -1,0 +1,8 @@
+{
+  "best_val_accuracy": 0.7528,
+  "test_accuracy": 0.7421,
+  "test_loss": 0.778617910194397,
+  "final_train_accuracy": 0.8124222222222223,
+  "final_train_loss": 0.5290344096872541,
+  "data_pipeline_samples_per_sec": 35765.73182335306
+}

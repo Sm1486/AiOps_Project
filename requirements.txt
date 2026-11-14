@@ -1,8 +1,12 @@
 ray
+torch
 torchvision
 matplotlib
 scikit-learn
 pyyaml
 dvc
+pytest
+pillow
 httpx2
+fastapi[all]
 python-multipart

@@ -1,0 +1,12 @@
+{
+  "airplane": 0.842,
+  "automobile": 0.844,
+  "bird": 0.646,
+  "cat": 0.6,
+  "deer": 0.669,
+  "dog": 0.669,
+  "frog": 0.833,
+  "horse": 0.712,
+  "ship": 0.871,
+  "truck": 0.768
+}

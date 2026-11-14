@@ -1,0 +1,16 @@
+{
+  "test_loss": 0.778618,
+  "test_accuracy": 0.7421,
+  "eval_throughput_samples_per_sec": 8697.75,
+  "eval_elapsed_sec": 1.15,
+  "test_acc_airplane": 0.869,
+  "test_acc_automobile": 0.837,
+  "test_acc_bird": 0.634,
+  "test_acc_cat": 0.58,
+  "test_acc_deer": 0.64,
+  "test_acc_dog": 0.661,
+  "test_acc_frog": 0.865,
+  "test_acc_horse": 0.703,
+  "test_acc_ship": 0.862,
+  "test_acc_truck": 0.77
+}
