@@ -32,6 +32,9 @@ To run the tests, run the following commands
 - pytest
 * (We need to run touch conftest.py to deal with the dependencies that happen with the import statements from other files in the directory)
 
+## Video Link
+https://drive.google.com/drive/folders/16iDhRfeMYUb0K3nFBHBmkjTl2jeL5cuB?usp=sharing
+
 ## Quick Start
 
 | Service | URL |
